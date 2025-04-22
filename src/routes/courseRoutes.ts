@@ -79,7 +79,7 @@ router.post(
       const { employee_name, email } = req.body;
       const registration_id = `${employee_name}-${course_id}`;
 
-      // ✅ Check if the email format is valid
+      //  Check if the email format is valid
       const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
       if (!emailRegex.test(email)) {
         return res.status(400).json({
@@ -87,7 +87,7 @@ router.post(
         });
       }
 
-      // ✅ Check if the employee is already registered for the same course
+      // Check if the employee is already registered for the same course
       const existingRegistration = await Registration.findOne({
         employee_name,
         course_id,
@@ -98,7 +98,7 @@ router.post(
         });
       }
 
-      // ✅ Get course details to check if it has space for more employees
+      //  Get course details to check if it has space for more employees
       const course = await Course.findOne({ course_id });
       if (!course) {
         return res.status(404).json({
@@ -111,7 +111,7 @@ router.post(
         course_id,
       });
 
-      // ✅ Check if the course is full
+      // Check if the course is full
       if (currentRegistrations >= course.max_employees) {
         return res.status(400).json({
           message: `The course ${course_id} is full. No more registrations allowed.`,
